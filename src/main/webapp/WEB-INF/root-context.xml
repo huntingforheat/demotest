@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        https://www.springframework.org/schema/context/spring-context.xsd
+                        http://mybatis.org/schema/mybatis-spring
+                        http://mybatis.org/schema/mybatis-spring.xsd"> <!-- mybatis:scan 하면 자동 생성 -->
+
+ <!--   <bean class="com.zercok.demotest.sample.SampleDAO"></bean>
+    <bean class="com.zercok.demotest.sample.SampleService"></bean>
+    -->
+
+    <!-- 컴포넌트 스캔 : 특정 위치에 있는 bean들을 자동 등록
+         이때 객체에 어노테이션 사용 : @Controller, @Service, @Repository, @Component
+
+         @Controller, MVC의 컨트롤러를 위한 어노테이션
+         @Service, 서비스 계층의 객체를 위한 어노테이션
+         @Repository, DAO와 같은 객체를 위한 어노테이션, DB설정
+         @Component 일반 객체나 유틸리티 객체를 위한 어노테이션
+    -->
+    <!-- com.zercok.demotest.sample 패키지에 어노테이션 인식하여 등록 -->
+    <context:component-scan base-package="com.zercok.demotest.sample" />    <!-- sample이라는 객체를 어노테이션 하겠다 -->
+
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/webdb?serverTimezone=Asia/Seoul"></property>
+        <property name="username" value="spring"></property>  <!-- DB username -->
+        <property name="password" value="spring"></property>
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">250</prop> <!-- 캐쉬 사이즈 -->
+                <prop key="prepStmtCacheSqlLimit">2048</prop> <!-- 캐쉬 제한 -->
+            </props>
+        </property>
+    </bean>
+    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+        <constructor-arg ref="hikariConfig" />  <!-- 생성자 주입 -->
+    </bean>
+
+    <!-- MyBatis 사용을 위한 객체 생성 : SqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" /> <!-- ref는 주입할 객체 -->
+        <property name="mapperLocations" value="classpath:/mappers/**/*.xml" /> <!-- **는 폴더 갯수 상관 x -->
+    </bean>
+
+    <mybatis:scan base-package="com.zercok.demotest.mapper"></mybatis:scan>
+</beans>
