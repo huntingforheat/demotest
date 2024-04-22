@@ -15,6 +15,9 @@
         <logger name="com.zercok" level="INFO" additivity="false">
             <appender-ref ref="console" />
         </logger>
+        <logger name="com.zercok.demotest.mapper" level="TRACE" additivity="false"> <!-- level을 TRACE로 설정하면 상세 정보를 로그에 띄워줌 -->
+            <appender-ref ref="console" />
+        </logger>
         <root level="INFO" additivity="false">
             <appender-ref ref="console" />
         </root>

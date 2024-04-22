@@ -51,5 +51,6 @@
     <mybatis:scan base-package="com.zercok.demotest.mapper"></mybatis:scan>
 
     <context:component-scan base-package="com.zercok.demotest.config" />
+    <context:component-scan base-package="com.zercok.demotest.service" />
 
 </beans>

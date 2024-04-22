@@ -2,6 +2,8 @@ package com.zercok.demotest.dto;
 
 import lombok.*;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 
 @ToString
@@ -12,8 +14,12 @@ import java.time.LocalDate;
 public class TodoDTO {
 
     private Long tno;
+
+    @NotEmpty
     private String title;
+    @Future // 날짜 설정 미래만 가능하게 설정
     private LocalDate dueDate;
     private boolean finished;
+    @NotEmpty
     private String writer;
 }
