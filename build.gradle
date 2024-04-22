@@ -60,6 +60,12 @@ dependencies {
     // mybatis 라이브러리
     implementation group: 'org.mybatis', name: 'mybatis', version: '3.5.9'
     implementation group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.7'
+
+    // DTO와 VO의 변환을 위한 ModelMapper
+    implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.0.0'
+
+    // DTO 검증을 위한 validate 관련 라이브러리
+    implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.2.1.Final'
 }
 
 test {

@@ -19,7 +19,7 @@
         <property name="suffix" value=".jsp"></property>                <!-- suffix는 접미사 후 에 작성하는 것 -->
     </bean>
 
-    <context:component-scan base-package="com.zercok.demotest.controller" />
+    <context:component-scan base-package="com.zercok.demotest.controller" />    <!-- com.zercok.demotest.controller의 하위 파일들은 스캔으로 자동으로 빈 객체 등록 -->
 
     <!-- Formatter설정 1. Formatter 설정을 위해 만든 빈 등록 -->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">

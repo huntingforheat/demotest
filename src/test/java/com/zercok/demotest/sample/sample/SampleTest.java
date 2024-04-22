@@ -1,5 +1,6 @@
-package com.zercok.demotest.sample;
+package com.zercok.demotest.sample.sample;
 
+import com.zercok.demotest.sample.SampleService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Assertions;

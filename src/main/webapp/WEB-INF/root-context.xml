@@ -22,7 +22,7 @@
          @Repository, DAO와 같은 객체를 위한 어노테이션, DB설정
          @Component 일반 객체나 유틸리티 객체를 위한 어노테이션
     -->
-    <!-- com.zercok.demotest.sample 패키지에 어노테이션 인식하여 등록 -->
+    <!-- com.zercok.demotest.sample 패키지에 어노테이션 인식하여 빈 등록 -->
     <context:component-scan base-package="com.zercok.demotest.sample" />    <!-- sample이라는 객체를 어노테이션 하겠다 -->
 
     <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
@@ -49,4 +49,7 @@
     </bean>
 
     <mybatis:scan base-package="com.zercok.demotest.mapper"></mybatis:scan>
+
+    <context:component-scan base-package="com.zercok.demotest.config" />
+
 </beans>

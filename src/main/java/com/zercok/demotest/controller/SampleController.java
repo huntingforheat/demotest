@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 
 @Controller
 @Log4j2
+@RequestMapping("/sample")
 public class SampleController {
 
     @GetMapping("/hello")   // GET방식일 때
@@ -91,7 +93,7 @@ public class SampleController {
         redirectAttributes.addAttribute("name", "ABC");
         redirectAttributes.addFlashAttribute("result", "success");  // 일회성 첫번째만 값을 보내고 그 후는 보내지 않음.
 
-        return "redirect:/ex6"; // 리다이렉트를 사용하기 위해서 쓰는 접두어, /ex5 들어오면 /ex6으로 리다이렉트
+        return "redirect:/sample/ex6"; // 리다이렉트를 사용하기 위해서 쓰는 접두어, /ex5 들어오면 /ex6으로 리다이렉트
     }
 
     @GetMapping("/ex6")
@@ -103,4 +105,11 @@ public class SampleController {
     // 반환 타입이 String인 경우에는 문자열의 값을 DispatcherServlet에게 전달
     //  -> redirect : 리다이렉트시 사용, forward : 포워드시 사용 (잘 사용x)
     // 객체나 배열, 기본 자료형
+
+    // 고의로 예외 발생하는 코드 작성
+    @GetMapping("/ex7")
+    public void ex7(String p1, int p2) {
+        log.info("p1" + p1);
+        log.info("p2" + p2);
+    }
 }
