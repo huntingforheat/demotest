@@ -5,7 +5,9 @@ import com.zercok.demotest.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,8 +24,9 @@ public class TodoController {
     private final TodoService todoService;
 
     @RequestMapping("/list") // /todo/list 접근시 해당 경로로 접근
-    public void list() {
+    public void list(Model model) {
         log.info("todo.list");
+        model.addAttribute("dtoList", todoService.getAll());
     }
     
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -50,4 +53,31 @@ public class TodoController {
 
         return "redirect:/todo/list";   // 등록 후 목록으로 이동
     }
+
+    // 한개의 Todo 조회하기
+    @GetMapping({"/read", "/modify"})   // /read로 들어오면 read.jsp로, /modify로 들어오면 modify.jsp로 이동
+    public void read(Long tno, Model model) {
+        TodoDTO todoDTO = todoService.getOne(tno);
+        log.info(todoDTO);
+        model.addAttribute("dto", todoDTO);
+    }
+
+    // Todo 삭제하기
+    @PostMapping("/remove")
+    public String remove(Long tno, RedirectAttributes redirectAttributes) {
+        log.info("-----------remove-------");
+        log.info("tno : "+ tno);
+
+        todoService.remove(tno);
+
+        return "redirect:/todo/list";
+    }
+
+    @PostMapping("/modify")
+    public void modify(TodoDTO todoDTO, RedirectAttributes redirectAttributes) {
+        log.info("modify........");
+        log.info(todoDTO);
+    }
+
+
 }

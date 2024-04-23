@@ -42,12 +42,13 @@
         <constructor-arg ref="hikariConfig" />  <!-- 생성자 주입 -->
     </bean>
 
-    <!-- MyBatis 사용을 위한 객체 생성 : SqlSessionFactory -->
+    <!-- MyBatis 사용을 위한 객체 생성 : SqlSessionFactory  객체 주입 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" /> <!-- ref는 주입할 객체 -->
         <property name="mapperLocations" value="classpath:/mappers/**/*.xml" /> <!-- **는 폴더 갯수 상관 x -->
     </bean>
 
+    <!-- mybatis mapper interface todomapper bean을 자동 검색 -->
     <mybatis:scan base-package="com.zercok.demotest.mapper"></mybatis:scan>
 
     <context:component-scan base-package="com.zercok.demotest.config" />

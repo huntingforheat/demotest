@@ -3,8 +3,21 @@ package com.zercok.demotest.service;
 import com.zercok.demotest.domain.TodoVO;
 import com.zercok.demotest.dto.TodoDTO;
 
-public interface TodoService {
+import java.util.List;
 
+public interface TodoService {
+    //Todo 등록 서비스
     void register(TodoDTO todoDTO);
 
+    // Todo 목록 서비스
+    List<TodoDTO> getAll();
+
+    // Todo 조회 서비스
+    TodoDTO getOne(Long tno);
+
+    // Todo 삭제 서비스
+    void remove(Long tno);
+
+    // Todo 수정 서비스
+    void modify(TodoDTO todoDTO);
 }
