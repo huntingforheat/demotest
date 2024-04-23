@@ -80,7 +80,7 @@
     <script>
         const serverValidResult = {}
 
-        <c:forEach items="${errors}" var="error">
+        <c:forEach items="${errors}" var="error">   <!-- ${error}는 todoController에서 registerPost attributename -->
             serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
         </c:forEach>
 

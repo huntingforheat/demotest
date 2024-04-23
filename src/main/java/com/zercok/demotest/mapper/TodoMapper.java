@@ -2,6 +2,7 @@ package com.zercok.demotest.mapper;
 
 import com.sun.tools.javac.comp.Todo;
 import com.zercok.demotest.domain.TodoVO;
+import com.zercok.demotest.dto.PageRequestDTO;
 
 import java.util.List;
 
@@ -24,4 +25,10 @@ public interface TodoMapper {
 
     // Todo 수정 기능
     void update(TodoVO todoVO);
+
+    // 페이징 처리를 통한 목록 보기
+    List<TodoVO> selectList(PageRequestDTO pageRequestDTO);
+
+    // 전체 게시물 갯수 알아오기
+    int getCount(PageRequestDTO pageRequestDTO);
 }

@@ -1,6 +1,8 @@
 package com.zercok.demotest.service;
 
 import com.zercok.demotest.domain.TodoVO;
+import com.zercok.demotest.dto.PageRequestDTO;
+import com.zercok.demotest.dto.PageResponseDTO;
 import com.zercok.demotest.dto.TodoDTO;
 import com.zercok.demotest.mapper.TodoMapper;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +33,32 @@ public class TodoServiceImpl implements TodoService{
         todoMapper.insert(todoVO);
     }
 
+//    @Override
+//    public List<TodoDTO> getAll() {
+//        List<TodoDTO> dtoList = todoMapper.selectAll().stream()// 스트림으로 TodoVo를 가져옴
+//                .map(vo -> modelMapper.map(vo, TodoDTO.class))
+//                .collect(Collectors.toList());
+//        return dtoList;
+//    }
+
     @Override
-    public List<TodoDTO> getAll() {
-        List<TodoDTO> dtoList = todoMapper.selectAll().stream()// 스트림으로 TodoVo를 가져옴
+    public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
+        // PageRequestDTO를 이용한 게시물 가져오기
+        List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+        // 가져온 voList를 dtoList로 변환
+        List<TodoDTO> dtoList = voList.stream()
                 .map(vo -> modelMapper.map(vo, TodoDTO.class))
                 .collect(Collectors.toList());
-        return dtoList;
+        // total 게시물
+        int total = todoMapper.getCount(pageRequestDTO);
+        // 반환할 PageResponseDTO를 생성
+        PageResponseDTO<TodoDTO> pageResponseDTO = PageResponseDTO.<TodoDTO>withAll()
+                .dtoList(dtoList)
+                .total(total)
+                .pageRequestDTO(pageRequestDTO)
+                .build();
+
+        return pageResponseDTO;
     }
 
     @Override

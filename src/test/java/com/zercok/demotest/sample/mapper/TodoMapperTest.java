@@ -2,6 +2,7 @@ package com.zercok.demotest.sample.mapper;
 
 import com.sun.tools.javac.comp.Todo;
 import com.zercok.demotest.domain.TodoVO;
+import com.zercok.demotest.dto.PageRequestDTO;
 import com.zercok.demotest.mapper.TodoMapper;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Assertions;
@@ -69,5 +70,24 @@ public class TodoMapperTest {
                 .build();
         todoMapper.update(todoVO1);
         log.info(todoMapper.selectOne(todoVO.getTno()));
+    }
+
+    @Test
+    public void skipTest() {
+        // 1. PageRequestDTo 생성
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(3)
+                .size(10)
+                .build();
+        // 2. todoMapper.selectList()를 테이스트 결과를 List<TodoVO>로 담기
+        List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+        // 3. 내용 출력
+        voList.forEach(vo -> log.info(vo));
+    }
+
+    @Test
+    public void countTest() {
+        int count = todoMapper.getCount(new PageRequestDTO(1, 10));
+        log.info("전체 게시글 수 : " + count);
     }
 }

@@ -1,5 +1,6 @@
 package com.zercok.demotest.controller;
 
+import com.zercok.demotest.dto.PageRequestDTO;
 import com.zercok.demotest.dto.TodoDTO;
 import com.zercok.demotest.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +25,15 @@ public class TodoController {
     private final TodoService todoService;
 
     @RequestMapping("/list") // /todo/list 접근시 해당 경로로 접근
-    public void list(Model model) {
-        log.info("todo.list");
-        model.addAttribute("dtoList", todoService.getAll());
+    public void list(@Valid PageRequestDTO pageRequestDTO,
+                     BindingResult bindingResult,
+                     Model model) {
+        log.info(pageRequestDTO);
+        if(bindingResult.hasErrors()) {
+            pageRequestDTO = PageRequestDTO.builder().build(); // pageRequestDTO의 lombok default값이 들어감
+        }
+
+        model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
     }
     
     @RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -74,9 +81,22 @@ public class TodoController {
     }
 
     @PostMapping("/modify")
-    public void modify(TodoDTO todoDTO, RedirectAttributes redirectAttributes) {
+    public String modify(@Valid TodoDTO todoDTO,
+                       BindingResult bindingResult,
+                       RedirectAttributes redirectAttributes) {
+        if(bindingResult.hasErrors()) {
+            log.info("has errors.....");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addAttribute("tno", todoDTO.getTno());   // GET 파라미터
+
+            return "redirect:/todo/modify"; // /todo/modify?tno=1(todoDTO.getTno()의 값)
+        }
         log.info("modify........");
         log.info(todoDTO);
+
+        todoService.modify(todoDTO);
+
+        return "redirect:/todo/list";
     }
 
 

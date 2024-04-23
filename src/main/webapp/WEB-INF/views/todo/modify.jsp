@@ -68,7 +68,7 @@
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">DueDate</span>
-                                <input type="date" name="duedate" class="form-control"
+                                <input type="date" name="dueDate" class="form-control"
                                        value='<c:out value="${dto.dueDate}" />' >
                             </div>
                             <div class="input-group mb-3">
@@ -92,6 +92,13 @@
         </div>
     </div>
     <script>
+        const serverValidResult = {}
+
+        <c:forEach items="${errors}" var="error">
+        serverValidResult['${error.getField()}'] = '${error.defaultMessage}'
+        </c:forEach>
+
+        console.log(serverValidResult)
 
         const formObj = document.querySelector("form")
 
@@ -115,6 +122,9 @@
         }, false);
 
         document.querySelector(".btn-secondary").addEventListener("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
             self.location = "/todo/list";
         }, false);
     </script>
