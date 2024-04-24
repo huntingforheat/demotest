@@ -85,9 +85,30 @@ public class TodoMapperTest {
         voList.forEach(vo -> log.info(vo));
     }
 
+//    @Test
+//    public void countTest() {
+//        int count = todoMapper.getCount(new PageRequestDTO(1, 10));
+//        log.info("전체 게시글 수 : " + count);
+//    }
+
     @Test
-    public void countTest() {
-        int count = todoMapper.getCount(new PageRequestDTO(1, 10));
-        log.info("전체 게시글 수 : " + count);
+    public void testSelectSearch() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .types(new String[]{"t", "w"})
+                .finished(true)
+                .from(LocalDate.of(2024, 04, 20))
+                .to(LocalDate.of(2024, 04, 30))
+                .keyword("siu")
+                .build();
+        List<TodoVO> voList = todoMapper.selectList(pageRequestDTO);
+
+        voList.forEach(vo -> log.info(vo));
+    }
+
+    @Test
+    public void getCountTest() {
+        
     }
 }

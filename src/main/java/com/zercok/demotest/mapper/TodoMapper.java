@@ -18,7 +18,7 @@ public interface TodoMapper {
     List<TodoVO> selectAll();
 
     // Todo 조회 기능
-    TodoVO selectOne(Long tno);
+    TodoVO selectOne(Long tno); // tno 기준으로 조회하니까 TodoVO의 tno 값을 가져옴
 
     // Todo 삭제 기능
     void delete(Long tno);
